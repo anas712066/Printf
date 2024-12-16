@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mumajeed <mumajeed@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/12 11:42:15 by mumajeed          #+#    #+#             */
-/*   Updated: 2024/12/12 11:51:28 by mumajeed         ###   ########.fr       */
+/*   Created: 2024/12/16 12:23:16 by mumajeed          #+#    #+#             */
+/*   Updated: 2024/12/16 12:29:24 by mumajeed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#include "../includes/ft_printf.h"
 
-# include <stdarg.h>
-# include <stdio.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include "libft/libft.h"
+int	ft_putchar(char c)
+{
+	return (write(1, &c, 1));
+}
 
-int	ft_printf(const char *format, ...);
-int	ft_putchar(char c);
-int	ft_putstr(char *s);
-int	ft_putnbr(int n);
-int	ft_puthex(unsigned int num, char format);
-int	ft_putptr(unsigned long ptr);
-int	ft_putunsigned(unsigned int n);
+int ft_putstr(char *s)
+{
+	int	len;
 
-#endif
+	len = 0;
+	if (!s)
+		return (ft_putstr("(null)"));
+}
