@@ -101,7 +101,7 @@ jobs:
 
     - name: Compile Libft (if needed)
       run: |
-        cd ~/work/printf/printf/libft
+        cd ~/work/printf/includes/libft
         make clean && make
 
     - name: Set TERM environment variable
