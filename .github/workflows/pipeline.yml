@@ -97,11 +97,11 @@ jobs:
     - name: Run Norminette
       run: |
         cd ~/work/printf/printf
-        norminette
+        norminette includes src includes/libft
 
-    - name: Compile Libft (if needed)
+    - name: Compile Project
       run: |
-        cd ~/work/printf/includes/libft
+        cd ~/work/printf/printf
         make clean && make
 
     - name: Set TERM environment variable
@@ -113,17 +113,14 @@ jobs:
         rm -rf ~/work/printf/printf_tmp
         cp -r ~/work/printf/printf ~/work/printf/printf_tmp
         cd ~/work/printf/printf_tmp
-        rm -rf ~/work/printf/printf_tmp/.github/
+        rm -rf .github/
         echo "Current directory: $(pwd)"
         ls -la
         echo "Norminette version:"
         norminette -v || echo "Failed to get Norminette version"
         echo "Ejecutando Francinette:"
         script -e -c "stdbuf -oL ~/francinette/tester.sh printf | tee francinette_output.log" /dev/null
-        search_result=$(grep -rnil "All tests passed! Congratulations!" .)
-        echo "Search result: $search_result"
         if grep -q "All tests passed! Congratulations!" francinette_output.log; then
-          echo "output.log found containing 'All tests passed! Congratulations!'."
           echo "FOUND_PHRASE=true" >> $GITHUB_ENV
         else
           echo "FOUND_PHRASE=false" >> $GITHUB_ENV
