@@ -26,5 +26,6 @@ int	ft_putnbr(int n);
 int	ft_puthex(unsigned int num, char format);
 int	ft_putptr(unsigned long ptr);
 int	ft_putunsigned(unsigned int n);
+int	handle_conversion(char c, va_list args);
 
 #endif
