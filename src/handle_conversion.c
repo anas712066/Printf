@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_print.h"
+#include "../includes/ft_printf.h"
 
 int	handle_conversion(char c, va_list args)
 {
