@@ -23,9 +23,9 @@ int	ft_printf(const char *format, ...);
 int	ft_putchar(char c);
 int	ft_putstr(char *s);
 int	ft_putnbr(int n);
-int	ft_puthex(unsigned int num, char format);
+int	ft_puthex_long(unsigned long num, char format);
 int	ft_putptr(unsigned long ptr);
 int	ft_putunsigned(unsigned int n);
-int	conversion(char c, va_list args);
+int	handle_conversions(char c, va_list args);
 
 #endif

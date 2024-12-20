@@ -24,7 +24,7 @@ int	ft_printf(const char *format, ...)
 		if (*format == '%' && *(format + 1))
 		{
 			format++;
-			printed_chars += conversion(*format, args);
+			printed_chars += handle_conversions(*format, args);
 		}
 		else
 			printed_chars += ft_putchar(*format);

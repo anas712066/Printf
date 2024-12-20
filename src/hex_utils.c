@@ -12,7 +12,7 @@
 
 #include "../includes/ft_printf.h"
 
-int	ft_puthex(unsigned int num, char format)
+int	ft_puthex_long(unsigned long num, char format)
 {
 	char	*hex_base;
 
@@ -21,7 +21,10 @@ int	ft_puthex(unsigned int num, char format)
 	else
 		hex_base = "0123456789ABCDEF";
 	if (num >= 16)
-		return (ft_puthex(num / 16, format) + ft_putchar(hex_base[num % 16]));
+		return (
+			ft_puthex_long(num / 16, format)
+			+ ft_putchar(hex_base[num % 16])
+		);
 	return (ft_putchar(hex_base[num % 16]));
 }
 
@@ -29,7 +32,9 @@ int	ft_putptr(unsigned long ptr)
 {
 	int	len;
 
+	if (ptr == 0)
+		return (ft_putstr("(nil)"));
 	len = ft_putstr("0x");
-	len = ft_puthex(ptr, x);
+	len += ft_puthex_long(ptr, 'x');
 	return (len);
 }

@@ -1,28 +1,60 @@
-NAME = libftprintf.a
+# **************************************************************************** #
+#                              Makefile - libftprintf                         #
+# **************************************************************************** #
 
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+# Variables
+NAME := libftprintf.a
+CC := gcc
+CFLAGS := -Wall -Wextra -Werror
+INCLUDES := -Iincludes/ft_printf -Iincludes/libft
+LIBFT_DIR := includes/libft
+LIBFT := $(LIBFT_DIR)/libft.a
+HEADER := includes/ft_printf.h
 
-SRCS = includes/libft/ft_isalpha.c includes/libft/ft_isdigit.c includes/libft/ft_isalnum.c includes/libft/ft_isascii.c includes/libft/ft_isprint.c includes/libft/ft_strlen.c includes/libft/ft_memset.c includes/libft/ft_bzero.c includes/libft/ft_memcpy.c includes/libft/ft_memmove.c includes/libft/ft_strlcpy.c includes/libft/ft_strlcat.c includes/libft/ft_toupper.c includes/libft/ft_tolower.c includes/libft/ft_strchr.c includes/libft/ft_strrchr.c includes/libft/ft_strncmp.c includes/libft/ft_memchr.c includes/libft/ft_memcmp.c includes/libft/ft_strnstr.c includes/libft/ft_atoi.c includes/libft/ft_calloc.c includes/libft/ft_strdup.c includes/libft/ft_substr.c includes/libft/ft_strjoin.c includes/libft/ft_strtrim.c includes/libft/ft_split.c includes/libft/ft_itoa.c includes/libft/ft_strmapi.c includes/libft/ft_striteri.c includes/libft/ft_putchar_fd.c includes/libft/ft_putstr_fd.c includes/libft/ft_putendl_fd.c includes/libft/ft_putnbr_fd.c src/ft_printf.c src/conversions.c src/utils.c src/hex_utils.c src/unsigned_utils.c
+SRC_DIR := src
+OBJ_DIR := obj
 
-OBJS = $(SRCS:.c=.o)
+SRC_FILES := \
+	utils.c \
+	unsigned_utils.c \
+	hex_utils.c \
+	ft_printf.c \
+	handle_conversions.c
 
-AR = ar -rcs
+SRC := $(addprefix $(SRC_DIR)/, $(SRC_FILES))
+OBJ := $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
 
-all: $(NAME)
+# Rules
+all: $(LIBFT) $(NAME)
 
-$(NAME): $(OBJS)
-	$(AR) $(NAME) $(OBJS)
+$(LIBFT):
+	@echo "Compiling libft..."
+	@$(MAKE) -C $(LIBFT_DIR)
 
-%.o: %.c includes/ft_printf.h includes/libft.h
-	$(CC) $(CFLAGS) -Iincludes -c -o $@ $<
+$(NAME): $(OBJ) $(LIBFT)
+	@echo "Creating $(NAME)..."
+	@cp $(LIBFT) $(NAME)
+	@ar rcs $(NAME) $(OBJ)
+	@echo "Done."
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADER) | $(OBJ_DIR)
+	@echo "Compiling $<..."
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+$(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
 
 clean:
-	rm -f $(OBJS)
+	@echo "Cleaning object files..."
+	@rm -rf $(OBJ_DIR)
+	@$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean: clean
-	rm -f $(NAME)
+	@echo "Cleaning library..."
+	@rm -f $(NAME)
+	@$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean all
 
 .PHONY: all clean fclean re
+
